@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html id="ng-app" ng-app="puzzle">
+<head prefix="og: http://ogp.me/ns#">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link href="/css/simple-sidebar.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <meta http-equiv="cleartype" content="on">
+    <meta charset="UTF-8">
+    <meta name="description" content="Word Puzzle game based on Google Engine API and AngularJS">
+    <meta name="keywords" content="HTML,CSS,AngularJS,Word Puzzle,Word,Puzzle,game,API,AngularJS, Google Engine">
+    <meta name="author" content="Serhii Kryvtsov">
+    <!-- Latest compiled and minified JavaScript -->
+</head>
+<script type="text/javascript" src="js/config/historyPushStateRedirection.js"></script>
+<script type="text/javascript" src="js/config/setBaseAppLocation.js"></script>
+
+<!-- AngularJS -->
+<script type="text/javascript" src="js/lib/angular.min.js"></script>
+<script type="text/javascript" src="js/lib/angular-route.min.js"></script>
+<script type="text/javascript" src="js/lib/angular-webstorage.min.js"></script>
+<script type="text/javascript" src="js/lib/bindonce.min.js"></script>
+
+<script type="text/javascript" src="js/jaxRsApiExplorer.js"></script>
+<!-- AngularJS Controllers -->
+
+<script type="text/javascript" src="js/controllers/HomeController.js"></script>
+
+
+<body ng-controller="HomeController">
+<div ng-repeat="class in classes track by $index" ng-hide="showClass">
+    <div ng-click="selectClass($index)">
+        {{class.name}}
+    </div>
+</div>
+<div ng-repeat="method in class.methods track by $index" ng-if="showClass && !showMethod">
+    <div>
+        Type: {{method.httpMethod}}
+    </div>
+    <div>
+        <a href="#" ng-click="selectMethod($index)">{{class.name}}.{{method.methodName}}</a>
+    </div>
+</div>
+<div ng-show="showMethod">
+    <form name='methodForm'>
+        <h1>Path:</h1>
+        {{path}}
+        <h2>Path params:</h2>
+<span>{{}}</span>
+        <span bo-bind="method.httpMethod"></span>
+        <div ng-repeat="pathParam in method.pathParams track by $index">
+            {{pathParam.name}} <input ng-model="params.pathParams[$index]" type="text" placeholder="Data"
+                                      ng-model='criteria'
+                                      name='pathParam{{$index}}'
+                                      ng-required="true" ng-change="paramChanged()"/>{{pathParam.pattern ?
+            pathParam.pattern : ''}}
+        </div>
+
+        <h2>Query params:</h2>
+
+        <div ng-repeat="pathParam in method.queryParams track by $index">
+            {{pathParam.name}} <input ng-model="params.queryParams[$index]" type="text" placeholder="Data"
+                                      ng-model='criteria'
+                                      ng-required="true" ng-change="paramChanged()"/>
+        </div>
+    </form>
+</div>
+<div class="spinner-container fadein fadeout anim" ng-show="isLoading">
+    <div class="spinner-box ">
+        <div class="spinner "></div>
+        <div class="spinner-text ">Loading...</div>
+    </div>
+</div>
+</body>
+</html>
