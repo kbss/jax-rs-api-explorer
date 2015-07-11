@@ -8,5 +8,8 @@
     <artifactId>jax-rs</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-
+    <modules>
+        <module>api-explorer</module>
+        <module>test-application</module>
+    </modules>
 </project>

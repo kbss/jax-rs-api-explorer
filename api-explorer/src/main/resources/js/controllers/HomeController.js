@@ -16,9 +16,8 @@ jaxRsApiExplorer.controller('HomeController',
             headerParams: []
         }
 
-
         var API = {
-            getApi: function () {
+            getResourceApi: function () {
                 $http.get("services/analyze")
                     .success(function (data, status, header, config) {
                         $rootScope.isLoading = false;
@@ -29,7 +28,6 @@ jaxRsApiExplorer.controller('HomeController',
                     });
             }
         }
-        API.getApi();
 
         $scope.selectClass = function (index) {
             $scope.class = $scope.classes[index];
@@ -52,9 +50,9 @@ jaxRsApiExplorer.controller('HomeController',
                 var token = "${" + (i + 1) + "}";
                 var value = $scope.params.pathParams[i];
                 if (!value) {
-                    value = "";
+                    value = token;
                 }
-                $scope.path = $scope.method.path.replace(token, value);
+                $scope.path = $scope.path.replace(token, value);
                 $log.debug($scope.path);
             }
             if ($scope.params.queryParams.length < 1) {
@@ -70,6 +68,9 @@ jaxRsApiExplorer.controller('HomeController',
             }
             $scope.path = $scope.path.substring(0, $scope.path.length - 1);
         }
+
+
+        API.getResourceApi();
     }]
 )
 ;

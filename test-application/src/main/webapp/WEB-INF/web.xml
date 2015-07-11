@@ -13,7 +13,7 @@
         </init-param>
         <init-param>
             <param-name>classes</param-name>
-            <param-value>org.forsp.jax.rs.explorer.JaxRsExample</param-value>
+            <param-value>org.forsp.jax.rs.explorer.example.JaxRsExample</param-value>
         </init-param>
         <init-param>
             <param-name>servicePath</param-name>

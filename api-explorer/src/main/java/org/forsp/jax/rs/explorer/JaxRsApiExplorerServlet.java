@@ -92,7 +92,7 @@ public class JaxRsApiExplorerServlet extends HttpServlet {
         StringWriter sw = new StringWriter();
         InputStream input = getClass().getResourceAsStream(url);
         if (input == null) {
-            LOGGER.warn("Can't find file: {}", url);
+            LOGGER.warn("Resource not found: {}", url);
             return null;
         }
         IOUtils.copy(input, sw);

@@ -16,6 +16,15 @@ public class JaxRsMethod {
     private Collection<JaxRsParam> headerParams;
     private JaxRsObject consumeObject;
     private JaxRsObject produceObject;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public String toString() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="ng-app" ng-app="puzzle">
+<html id="ng-app" ng-app="jaxRsApiExplorer">
 <head prefix="og: http://ogp.me/ns#">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -9,8 +9,8 @@
     <link href="/css/style.css" rel="stylesheet">
     <meta http-equiv="cleartype" content="on">
     <meta charset="UTF-8">
-    <meta name="description" content="Word Puzzle game based on Google Engine API and AngularJS">
-    <meta name="keywords" content="HTML,CSS,AngularJS,Word Puzzle,Word,Puzzle,game,API,AngularJS, Google Engine">
+    <meta name="description" content="JAX-RS API Explorer">
+    <meta name="keywords" content="JAX-RS, REST, service, explorer">
     <meta name="author" content="Serhii Kryvtsov">
     <!-- Latest compiled and minified JavaScript -->
 </head>
@@ -35,35 +35,107 @@
         {{class.name}}
     </div>
 </div>
-<div ng-repeat="method in class.methods track by $index" ng-if="showClass && !showMethod">
-    <div>
-        Type: {{method.httpMethod}}
-    </div>
-    <div>
-        <a href="#" ng-click="selectMethod($index)">{{class.name}}.{{method.methodName}}</a>
-    </div>
+<div ng-if="showClass && !showMethod">
+    <table>
+        <thead>
+        <tr>
+            <td>
+                Http method
+            </td>
+            <td>
+                Name
+            </td>
+            <td>
+                Description
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="method in class.methods track by $index">
+            <td>
+                {{method.httpMethod}}
+            </td>
+            <td>
+                <a href="#" ng-click="selectMethod($index)">{{class.name}}.{{method.methodName}}</a>
+            </td>
+            <td>
+                {{method.description}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <div ng-show="showMethod">
     <form name='methodForm'>
-        <h1>Path:</h1>
-        {{path}}
-        <h2>Path params:</h2>
-<span>{{}}</span>
-        <span bo-bind="method.httpMethod"></span>
-        <div ng-repeat="pathParam in method.pathParams track by $index">
-            {{pathParam.name}} <input ng-model="params.pathParams[$index]" type="text" placeholder="Data"
-                                      ng-model='criteria'
-                                      name='pathParam{{$index}}'
-                                      ng-required="true" ng-change="paramChanged()"/>{{pathParam.pattern ?
-            pathParam.pattern : ''}}
+        <b>{{method.httpMethod}}</b> {{class.path}}<b>{{path}}</b>
+
+        <div ng-if="method.pathParams || method.pathParams.lenght > 0">
+            <h3>Path params:</h3>
+            <table>
+                <thead>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        Value
+                    </td>
+                    <td>
+                        Type
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="pathParam in method.pathParams track by $index">
+                    <td>
+                        {{pathParam.name}}
+                    </td>
+                    <td>
+                        <input ng-model="params.pathParams[$index]" type="text"
+                               placeholder="Path param# {{$index + 1}}"
+                               ng-model='criteria'
+                               name='pathParam{{$index}}'
+                               ng-required="true" ng-change="paramChanged()"/>
+                    </td>
+                    <td>
+                        {{pathParam.typeName}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
-        <h2>Query params:</h2>
-
-        <div ng-repeat="pathParam in method.queryParams track by $index">
-            {{pathParam.name}} <input ng-model="params.queryParams[$index]" type="text" placeholder="Data"
-                                      ng-model='criteria'
-                                      ng-required="true" ng-change="paramChanged()"/>
+        <div ng-if="method.pathParams || method.pathParams.lenght > 0">
+            <h3>Query params:</h3>
+            <table>
+                <thead>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        Value
+                    </td>
+                    <td>
+                        Type
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="pathParam in method.queryParams track by $index">
+                    <td>
+                        {{pathParam.name}}
+                    </td>
+                    <td>
+                        <input ng-model="params.queryParams[$index]" type="text" placeholder="Data"
+                               ng-model='criteria'
+                               ng-required="true" ng-change="paramChanged()"/>
+                    </td>
+                    <td>
+                        {{pathParam.typeName}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </form>
 </div>
