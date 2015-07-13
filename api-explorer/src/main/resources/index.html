@@ -31,9 +31,28 @@
 
 <body ng-controller="HomeController">
 <div ng-repeat="class in classes track by $index" ng-hide="showClass">
-    <div ng-click="selectClass($index)">
-        {{class.name}}
-    </div>
+    <table>
+        <thead>
+        <tr>
+            <td>
+                Name
+            </td>
+            <td>
+                Description
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="class in classes track by $index">
+            <td>
+                <a href="?c={{$index}}" ng-click="selectClass($index)">{{class.name}}</a>
+            </td>
+            <td>
+                {{method.description}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <div ng-if="showClass && !showMethod">
     <table>
@@ -56,7 +75,7 @@
                 {{method.httpMethod}}
             </td>
             <td>
-                <a href="#" ng-click="selectMethod($index)">{{class.name}}.{{method.methodName}}</a>
+                <a href="?c={{classIndex}}&m={{$index}}" ng-click="selectMethod($index)">{{class.name}}.{{method.methodName}}</a>
             </td>
             <td>
                 {{method.description}}

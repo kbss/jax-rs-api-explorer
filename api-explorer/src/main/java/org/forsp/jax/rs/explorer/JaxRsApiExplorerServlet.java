@@ -75,7 +75,7 @@ public class JaxRsApiExplorerServlet extends HttpServlet {
             return;
         }
 
-        boolean redirectToIndex = path.equals("/") || path.isEmpty();
+        boolean redirectToIndex = path.equals("/") || path.isEmpty() || !path.contains(".");
         if (redirectToIndex) {
             String content = getContent("/index.html");
             if (content == null) {
@@ -85,7 +85,12 @@ public class JaxRsApiExplorerServlet extends HttpServlet {
             out.println(content);
             return;
         }
-        out.println(getContent(path));
+        String content = getContent(path);
+        if (content == null) {
+            response.sendError(404);
+            return;
+        }
+        out.println(content);
     }
 
     private String getContent(String url) throws IOException {

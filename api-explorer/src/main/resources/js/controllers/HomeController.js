@@ -15,7 +15,7 @@ jaxRsApiExplorer.controller('HomeController',
             queryParams: [],
             headerParams: []
         }
-
+        $scope.classIndex = null;
         var API = {
             getResourceApi: function () {
                 $http.get("services/analyze")
@@ -32,6 +32,7 @@ jaxRsApiExplorer.controller('HomeController',
         $scope.selectClass = function (index) {
             $scope.class = $scope.classes[index];
             $scope.showClass = true;
+            $scope.classIndex = index;
         }
         $scope.selectMethod = function (index) {
             $log.debug("Show method details " + index);
